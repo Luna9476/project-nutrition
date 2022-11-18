@@ -3,7 +3,7 @@
 # How to start
 
 ## Python virtual environment
-
+cd to the project folder
 1. Create virtual environment
 ```
 python3 -m venv venv
@@ -51,6 +51,7 @@ python server.py
 Start react client
 ```
 cd client
+npm install
 npm start
 ```
 It will show the App log in page with localhost:3000
