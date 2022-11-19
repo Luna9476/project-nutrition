@@ -14,6 +14,8 @@ import { getCurrentUser } from './services/auth.service';
 import { Dashboard } from './components/Dashboard';
 import { ThemeProvider } from '@emotion/react';
 import createTheme from '@mui/material/styles/createTheme';
+import Food from './components/Food';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -47,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "history",
         element: <History />
+      },
+      {
+        path: "foods",
+        element: <Food />
       }
     ]
   }
@@ -55,8 +61,10 @@ const router = createBrowserRouter([
 const theme = createTheme({
   palette: {
     primary: {
-      // Purple and green play nicely together.
-      main: '#40916C',
+      main: '#40916C'
+    },
+    info: {
+      main: '#b7e4c7'
     }
   },
 });

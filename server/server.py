@@ -6,14 +6,15 @@ from functools import wraps
 import jwt
 import secrets
 import datetime
-from db.user import add_new_user, find_user, update_avatar, find_user_avatar, find_user_by_id
+from db.user import add_new_user, find_user, update_avatar, find_user_avatar, find_user_by_id, find_latest_body_record, add_body_record
 
 app = Flask(__name__)
+CORS(app)
 secret_key = secrets.token_hex(16)
 # example output, secret_key = 000d88cd9d90036ebdd237eb6b0db000
 app.config['SECRET_KEY'] = '000d88cd9d90036ebdd237eb6b0db000'
 app.config['AVATAR_PATH']='images/avatars'
-CORS(app)
+
 
 def token_required(f):
     @wraps(f)
@@ -65,9 +66,8 @@ def login_user():
 @token_required
 def get_user_avatar(current_user):
     user_id = current_user['id']
-    print(user_id)
     path =  find_user_avatar(user_id)
-    # print(path)
+    print(path)
     return send_file(path)
 
 @app.route('/api/avatar', methods = ['POST'])
@@ -88,6 +88,38 @@ def get_user_profile(current_user):
     user_id = current_user['id']
     user_profile = find_user_by_id(user_id)
     return user_profile
-   
+
+@app.route('/api/record', methods=['GET'])
+@token_required
+def get_user_body_record(current_user):
+    user_id = current_user['id']
+    user_body_record = find_latest_body_record(user_id)
+    if user_body_record:
+        print(user_body_record)
+        return user_body_record
+    return make_response('no records found', 200, {'message': 'no records found'})
+
+@app.route('/api/record', methods=['POST'])
+@token_required
+def add_user_body_record(current_user):
+    user_id = current_user['id']
+    request_data = request.get_json()
+    weight = request_data['weight']
+    height = request_data['height']
+    updated_body_record = add_body_record(user_id, height=height, weight=weight)
+    return updated_body_record
+
+@app.route('/api/image', methods=['GET'])
+def get_image():
+    url = request.args.get('url')
+    if url:
+        try:
+            print(url)
+
+            return send_file(url)
+        except Exception as e:
+            return make_response('no image found with url', 500)
+    return make_response('no url', 400)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8080)

@@ -3,9 +3,8 @@ import { Autocomplete, Avatar, Box, Button, Card, CardActions, CardContent, Form
 import Grid from '@mui/material/Unstable_Grid2';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import EventNoteIcon from '@mui/icons-material/EventNote';
-import React, { useEffect, useState } from 'react';
-import { getUserAvatar, getUserProfile, updateUserAvatar, } from '../services/user.service';
-import { useOutletContext } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { getUserAvatar, getUserLatestBodyRecord, getUserProfile, udpateUserBodyRecord, updateUserAvatar, } from '../services/user.service';
 import { useAvatar } from './Dashboard';
 
 export default function Profile() {
@@ -17,6 +16,8 @@ export default function Profile() {
     const [gender, setGender] = React.useState('other');
     const [isVegi, setVegi] = React.useState(false);
     const [uploadCount, setUploadCount] = React.useState(0);
+    const [weight, setWeight] = React.useState(0);
+    const [height, setHeight] = React.useState(0);
 
 
     const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
@@ -36,6 +37,13 @@ export default function Profile() {
         }
     }
 
+    const handleBodyRecordUpdate = () => {
+        udpateUserBodyRecord(height, weight).then(response => {
+            setHeight(response.data.height);
+            setWeight(response.data.weight);
+        });
+    }
+
     useEffect(() => {
         getUserProfile().then(response => {
             let user = response.data;
@@ -43,6 +51,12 @@ export default function Profile() {
             setEmail(user.email); 
             setGender(user.gender);
             setVegi(user.vegi);
+            
+        });
+
+        getUserLatestBodyRecord().then(response => {
+            setHeight(response.data.height);
+            setWeight(response.data.weight);
         });
 
         getUserAvatar().then(response => {
@@ -104,14 +118,14 @@ export default function Profile() {
                                     <Typography id="input-slider" gutterBottom>
                                         Height
                                     </Typography>
-                                    <Slider defaultValue={170} aria-label="Default" valueLabelDisplay="on" />
+                                    <Slider value={height} aria-label="Default" valueLabelDisplay="on" onChangeCommitted={(e, value) => {if (typeof value === 'number') {setHeight(value)}}}/>
                                     <Typography id="input-slider" gutterBottom>
                                         Weight
                                     </Typography>
-                                    <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="on" />
+                                    <Slider value={weight} aria-label="Default" valueLabelDisplay="on" onChangeCommitted={(e, value) => {if (typeof value === 'number') {setWeight(value)}}}/>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small">Update Body Record</Button>
+                                    <Button size="small" onClick={handleBodyRecordUpdate}>Update Body Record</Button>
                                 </CardActions>
                             </Card>
                         </Stack>

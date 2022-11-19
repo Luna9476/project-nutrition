@@ -1,3 +1,4 @@
+from datetime import datetime
 import sqlite3
 
 def get_db_connection():
@@ -76,6 +77,38 @@ def update_avatar(user_id, path):
     )
     conn.commit()
     conn.close()
+
+def find_latest_body_record(user_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        'SELECT height, weight FROM user_body_records where user_id = ? ORDER BY updatetime DESC LIMIT 1', (user_id, )
+    )
+    row = cur.fetchone()      
+    conn.close()
+    if row:
+        return {
+            'height': row[0],
+            'weight': row[1]
+        }
+
+def add_body_record(user_id, height, weight):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    now = datetime.now()
+    cur.execute(
+        'INSERT INTO user_body_records (user_id, height, weight, updatetime) values (?, ?, ?, ?)', (user_id, height, weight, now)
+    )
+    conn.commit()
+    cur.execute(
+        'SELECT height, weight FROM user_body_records where user_id = ? and updatetime = ?', (user_id, now)
+    )
+    row = cur.fetchone()
+    conn.close()
+    return {
+        'height': row[0],
+        'weight': row[1]
+    }
 
 def hello():
     conn = get_db_connection()

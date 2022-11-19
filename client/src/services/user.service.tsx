@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = "http://127.0.0.1:5000/api/";
+const API_URL = "http://127.0.0.1:8080/api/";
 
 const axiosWithHeader = axios.create({
     headers: authHeader()
@@ -25,4 +25,19 @@ export const updateUserAvatar = (formData: FormData) => {
     })
     return axiosWithHeader.post(API_URL + "avatar", formData)
         .then(res => console.log('success'));
+}
+
+export const udpateUserBodyRecord = (height: Number, weight: Number) => {
+    return axiosWithHeader.post(
+        API_URL + "record", {
+            height: height,
+            weight: weight
+        }
+    )
+}
+
+export const getUserLatestBodyRecord = () => {
+    return axiosWithHeader.get(
+        API_URL + "record"
+    )
 }

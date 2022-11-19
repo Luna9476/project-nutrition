@@ -290,7 +290,7 @@ function Dashboard() {
               <ListItemText primary={'Body Record'} />
             </ListItemButton>
           </ListItem>
-          <ListItem key={'foodrec'} disablePadding>
+          <ListItem key={'foodrec'} disablePadding component={Link} to="foods">
             <ListItemButton>
               <ListItemIcon>
                 <FoodBankIcon />
