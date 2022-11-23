@@ -86,6 +86,91 @@ INSERT INTO food (food_name, food_image_path, food_calories, vegi_or_not, type) 
 INSERT INTO food (food_name, food_image_path, food_calories, vegi_or_not, type) VALUES ('Quick-Cooking Oats', 'images/foods/Quick-Cooking-Oats.jpeg', 150, 'yes', 'breakfast');
 INSERT INTO food (food_name, food_image_path, food_calories, vegi_or_not, type) VALUES ('Chicken and Spinach Skillet Pasta with Lemon and Parmesan', 'images/foods/Chicken-and-Spinach-Skillet-Pasta-with-Lemon-and-Parmesan.jpeg', 335, 'no', 'breakfast');
 
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Pancake with Honey', 'images/foods/Pancake-with-Honey.png', 350, 'yes', 'breakfast');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Bagel with Butter', 'images/foods/Bagel-with-Butter.png', 320, 'yes', 'breakfast');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Cornbread', 'images/foods/Cornbread.png', 275, 'yes', 'breakfast');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Boiled Noodles', 'images/foods/Boiled-Noodles.png', 150, 'yes', 'breakfast');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Sausage', 'images/foods/Sausage.png', 175, 'no', 'breakfast');
+
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Egg Sandwich', 'images/foods/Egg-Sandwich.png', 360, 'yes', 'breakfast');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Pumpkin Porridge', 'images/foods/Pumpkin-Porridge.png', 105, 'yes', 'breakfast');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Seafood Soup', 'images/foods/Seafood-Soup.png', 340, 'no', 'breakfast');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Dumplings', 'images/foods/Dumplings.png', 410, 'yes', 'breakfast');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Steamed Bun', 'images/foods/Steamed-Bun.png', 230, 'yes', 'breakfast');
+
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Bread Baked Chicken', 'images/foods/Bread-Baked-Chicken.png', 920, 'no', 'dinner');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Pork Salad', 'images/foods/Pork-Salad.png', 600, 'no', 'dinner');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Stir-fried Vegetables', 'images/foods/Stir-fried-Vegetables.png', 505, 'yes', 'dinner');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Honey Garlic Ribs', 'images/foods/Honey-Garlic-Ribs.png', 950, 'no', 'dinner');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Beef Taco', 'images/foods/Beef-Taco.png', 800, 'no', 'dinner');
+
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Greek Shrimp', 'images/foods/Greek-Shrimp.png', 610, 'no', 'dinner');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Steak with Sauce', 'images/foods/Steak-with-Sauce.png', 910, 'no', 'dinner');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Mashed Potatoes', 'images/foods/Mashed-Potatoes.png', 520, 'yes' 'dinner');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('Cauliflower', 'images/foods/Cauliflower.png', 660, 'yes', 'dinner');
+INSERT INTO food (food_name,food_image_path,food_calories,vegi_or_not,type) VALUES ('French fries', 'images/foods/French-fries.png', 550, 'yes', 'dinner');
+
 INSERT INTO allergens (allergen_name) VALUES ('milk');
 INSERT INTO allergens (allergen_name) VALUES ('wheat');
 INSERT INTO allergens (allergen_name) VALUES ('seafood');
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (1, 1);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (2, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (3, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (4, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (5, );
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (6, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (7, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (8, 3);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (9, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (10, 2);
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (11, 1);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (12, 1);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (13, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (14, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (15, );
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (16, 1);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (17, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (18, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (19, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (20, );
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (21, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (22, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (23, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (24, 1);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (25, 2);
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (26, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (27, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (28, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (29, 1);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (30, 3);
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (31, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (32, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (33, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (34, 3);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (35, );
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (36, );
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (37, 3);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (38, 3);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (39, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (40, );
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (41, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (42, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (43, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (44, 1);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (1, 2);
+
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (11, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (16, 3);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (24, 2);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (25, 3);
+INSERT INTO food_allergens (food_id, allergen_id) VALUES (29, 2);
+
