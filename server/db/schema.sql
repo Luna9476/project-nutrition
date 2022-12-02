@@ -38,6 +38,7 @@ CREATE TABLE "user" (
 	"password"	TEXT NOT NULL,
 	"avatar_path"	TEXT,
 	"gender"	TEXT,
+	"birthdate" TEXT,
 	"vegi"	INTEGER,
 	PRIMARY KEY("user_id" AUTOINCREMENT)
 );
@@ -46,7 +47,8 @@ CREATE TABLE "user_allergens" (
 	"id"	INTEGER,
 	"user_id"	INTEGER,
 	"allergen_id"	INTEGER,
-	PRIMARY KEY("id"),
+	UNIQUE("user_id","allergen_id"),
+	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("user_id") REFERENCES "user"("user_id"),
 	FOREIGN KEY("allergen_id") REFERENCES "allergens"("id")
 );

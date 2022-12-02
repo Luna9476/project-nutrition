@@ -146,7 +146,7 @@ function Dashboard() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Health Managment System
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -282,7 +282,7 @@ function Dashboard() {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-          <ListItem key={'history'} disablePadding>
+          <ListItem key={'history'} disablePadding component={Link} to="history">
             <ListItemButton>
               <ListItemIcon>
                 <TimelineIcon />

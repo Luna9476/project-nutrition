@@ -1,12 +1,15 @@
 import os
+
 from flask import Flask, request, jsonify, make_response, send_file
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import jwt
 import secrets
-import datetime
-from db.user import add_new_user, find_user, update_avatar, find_user_avatar, find_user_by_id, find_latest_body_record, add_body_record
+from datetime import datetime, timedelta
+from db.user import *
+from db.allergies import *
+from db.food import *
 
 app = Flask(__name__)
 CORS(app)
@@ -55,7 +58,7 @@ def login_user():
    # find user from db
    user = find_user(email=data['email'])
    if check_password_hash(user['password'], data['password']):
-       token = jwt.encode({'email' : user['email'], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=45)}, app.config['SECRET_KEY'], "HS256")
+       token = jwt.encode({'email' : user['email'], 'exp' : datetime.utcnow() + timedelta(minutes=45)}, app.config['SECRET_KEY'], "HS256")
        print(token)
        return jsonify({'token' : token})
  
@@ -89,6 +92,22 @@ def get_user_profile(current_user):
     user_profile = find_user_by_id(user_id)
     return user_profile
 
+@app.route('/api/profile', methods=['POST'])
+@token_required
+def update_user_profile(current_user):
+    user_id = current_user['id']
+    request_data = request.get_json()
+    print(request_data)
+    user_name = request_data['userName']
+    gender = request_data['gender']
+    is_vegi = request_data['isVegi']
+    birthdate = request_data['birthdate']
+    allergens = request_data['allergens']
+
+    print(is_vegi)
+    update_res = update_user(user_id, user_name, gender, is_vegi, birthdate, allergens)
+    print(update_res)
+
 @app.route('/api/record', methods=['GET'])
 @token_required
 def get_user_body_record(current_user):
@@ -98,6 +117,13 @@ def get_user_body_record(current_user):
         print(user_body_record)
         return user_body_record
     return make_response('no records found', 200, {'message': 'no records found'})
+
+@app.route('/api/records', methods=['GET'])
+@token_required
+def get_user_body_records(current_user):
+    user_id = current_user['id']
+    user_body_records = find_user_body_records(user_id)
+    return {'records': user_body_records}
 
 @app.route('/api/record', methods=['POST'])
 @token_required
@@ -120,6 +146,23 @@ def get_image():
         except Exception as e:
             return make_response('no image found with url', 500)
     return make_response('no url', 400)
+
+
+@app.route('/api/allergies', methods=['GET'])
+def get_allergies():
+    return get_all_allergies()
+
+@app.route('/api/foods', methods=['GET'])
+@token_required
+def get_foods(current_user):
+    calories = float(request.args.get('calories'))
+    food_type = request.args.get('type')
+    is_vegi = request.args.get('isVegi') == 'true'
+    user_id = current_user['id']
+    
+    print('is_vegi:', is_vegi)
+    return get_food_by_calories(calories, food_type, user_id, is_vegi)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)

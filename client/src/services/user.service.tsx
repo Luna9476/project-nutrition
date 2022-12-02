@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { Dayjs } from 'dayjs';
 import authHeader from './auth-header';
 
 const API_URL = "http://127.0.0.1:8080/api/";
@@ -8,6 +9,12 @@ const axiosWithHeader = axios.create({
 });
 export const getUserProfile = () => {
     return axiosWithHeader.get(API_URL + "profile")
+}
+
+export const updateUserProfile = (profileJson: { userName: string; gender: string; isVegi: boolean; birthdate: string | undefined; allergens: number[]; }) => {
+    return axiosWithHeader.post(
+        API_URL + "profile", profileJson
+    )
 }
 
 export const getUserAvatar = () => {
@@ -39,5 +46,11 @@ export const udpateUserBodyRecord = (height: Number, weight: Number) => {
 export const getUserLatestBodyRecord = () => {
     return axiosWithHeader.get(
         API_URL + "record"
+    )
+}
+
+export const getUserBodyRecords = () => {
+    return axiosWithHeader.get(
+        API_URL + "records"
     )
 }

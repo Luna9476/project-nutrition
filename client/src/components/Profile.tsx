@@ -4,10 +4,17 @@ import Grid from '@mui/material/Unstable_Grid2';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import React, { useEffect } from 'react';
-import { getUserAvatar, getUserLatestBodyRecord, getUserProfile, udpateUserBodyRecord, updateUserAvatar, } from '../services/user.service';
+import { getUserAvatar, getUserLatestBodyRecord, getUserProfile, udpateUserBodyRecord, updateUserAvatar, updateUserProfile, } from '../services/user.service';
 import { useAvatar } from './Dashboard';
+import { getAllergies } from '../services/food.service';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs, { Dayjs } from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 export default function Profile() {
+
     const theme = useTheme();
 
     const [avatar, setAvatar] = useAvatar();
@@ -15,13 +22,26 @@ export default function Profile() {
     const [userName, setUserName] = React.useState('');
     const [gender, setGender] = React.useState('other');
     const [isVegi, setVegi] = React.useState(false);
+    const [allergeticOptions, setAllergeticOptions] = React.useState<readonly {id: number, label: string}[]>([]);
+    const [allergetics, setAllergetics] = React.useState<{id: number, label: string}[]>([]);
+    const [birthdate, setBirthdate] = React.useState<Dayjs | null>(null);
     const [uploadCount, setUploadCount] = React.useState(0);
     const [weight, setWeight] = React.useState(0);
     const [height, setHeight] = React.useState(0);
 
-
-    const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
-        alert('submit');
+    const handleSubmit = () => {
+        const allergens = allergetics.map(v => v.id);
+        
+        const profileJson = {
+            'userName': userName,
+            'gender': gender,
+            'isVegi': isVegi,
+            'birthdate': birthdate?.toISOString(),
+            'allergens': allergens
+        }
+        updateUserProfile(profileJson).then(() => {
+            alert('success');
+        })
     }
 
     const handleAvatarUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +52,7 @@ export default function Profile() {
 
             formData.append("file", file);
             updateUserAvatar(formData).then(res => {
-                setUploadCount(uploadCount+1);
+                setUploadCount(uploadCount + 1);
             });
         }
     }
@@ -48,10 +68,11 @@ export default function Profile() {
         getUserProfile().then(response => {
             let user = response.data;
             setUserName(user.username);
-            setEmail(user.email); 
+            setEmail(user.email);
             setGender(user.gender);
             setVegi(user.vegi);
-            
+            setBirthdate(dayjs(user.birthdate));
+            setAllergetics(user.allergens)
         });
 
         getUserLatestBodyRecord().then(response => {
@@ -59,11 +80,16 @@ export default function Profile() {
             setWeight(response.data.weight);
         });
 
+        getAllergies().then(response => {
+            const allergies = response.data.allergies;
+            setAllergeticOptions(allergies);
+        });
+
         getUserAvatar().then(response => {
-            const blob =  response.data 
+            const blob = response.data
             setAvatar(blob);
             if (uploadCount === 0) {
-                setUploadCount(uploadCount+1);
+                setUploadCount(uploadCount + 1);
             }
         })
     }, [uploadCount]);
@@ -93,7 +119,7 @@ export default function Profile() {
                                         justifyContent: 'center',
                                         alignItems: 'center'
                                     }}>
-                                        <Avatar src={avatar? URL.createObjectURL(avatar) : '/broken_image.jpg'} sx={{ width: 126, height: 126 }} />
+                                        <Avatar src={avatar ? URL.createObjectURL(avatar) : '/broken_image.jpg'} sx={{ width: 126, height: 126 }} />
                                         <Typography variant='caption' >
                                             Allowed *.jpeg, *.jpg, *.png, *.gif
                                             max size of 3.1 MB
@@ -116,13 +142,13 @@ export default function Profile() {
                                     <EventNoteIcon />
 
                                     <Typography id="input-slider" gutterBottom>
-                                        Height
+                                        Height (cm)
                                     </Typography>
-                                    <Slider value={height} aria-label="Default" valueLabelDisplay="on" onChangeCommitted={(e, value) => {if (typeof value === 'number') {setHeight(value)}}}/>
+                                    <Slider value={height} valueLabelDisplay="auto" onChangeCommitted={(e, value) => { if (typeof value === 'number') { setHeight(value) } }} min={100} max={200} />
                                     <Typography id="input-slider" gutterBottom>
-                                        Weight
+                                        Weight (kg)
                                     </Typography>
-                                    <Slider value={weight} aria-label="Default" valueLabelDisplay="on" onChangeCommitted={(e, value) => {if (typeof value === 'number') {setWeight(value)}}}/>
+                                    <Slider value={weight} valueLabelDisplay="auto" onChangeCommitted={(e, value) => { if (typeof value === 'number') { setWeight(value) } }} min={0} max={150}/>
                                 </CardContent>
                                 <CardActions>
                                     <Button size="small" onClick={handleBodyRecordUpdate}>Update Body Record</Button>
@@ -149,6 +175,7 @@ export default function Profile() {
                                             required
                                             label="User Name"
                                             value={userName}
+                                            onChange={(e) => {setUserName(e.target.value)}}
                                         />
                                         <TextField
                                             disabled
@@ -164,36 +191,38 @@ export default function Profile() {
                                         }}>
                                             <FormLabel>Gender</FormLabel>
                                             <RadioGroup row value={gender} onChange={e => setGender((e.target as HTMLInputElement).value)}>
-                                                <FormControlLabel value="female" control={<Radio/> } label={<Typography variant='body2'>Female</Typography>}/>
+                                                <FormControlLabel value="female" control={<Radio />} label={<Typography variant='body2'>Female</Typography>} />
                                                 <FormControlLabel value="male" control={<Radio />} label={<Typography variant='body2'>Male</Typography>} />
-                                                <FormControlLabel value="other" control={<Radio />} label={<Typography variant='body2'>Other</Typography>} />
                                             </RadioGroup>
                                         </FormControl>
                                     </div>
+
+
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DatePicker
+                                            label="Your Birth Date"
+                                            value={birthdate}
+                                            onChange={(newValue) => {
+                                                setBirthdate(newValue);
+                                            }}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </LocalizationProvider>
 
                                     <Typography variant="overline" display="block" gutterBottom>
                                         Preferences
                                     </Typography>
                                     <Box>
-                                        <FormControlLabel control={<Switch checked={isVegi} onClick={() => setVegi(!isVegi)}/>} label="I am Vegi" />
+                                        <FormControlLabel control={<Switch checked={isVegi} onClick={() => setVegi(!isVegi)} />} label="I am Vegi" />
                                         <Autocomplete
                                             multiple
                                             size='small'
-                                            options={[
-                                                {
-                                                    id: 1,
-                                                    title: 'gluten'
-                                                }, {
-                                                    id: 2,
-                                                    title: 'seafood'
-                                                }, {
-                                                    id: 3,
-                                                    title: 'milk'
-                                                }
-                                            ]}
-                                            getOptionLabel={(option) => option.title}
-                                            // defaultValue={[top100Films[13]]}
+                                            options={allergeticOptions}
                                             filterSelectedOptions
+                                            value={allergetics}
+                                            onChange={(e, v) => {
+                                                setAllergetics(v);
+                                            }}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}

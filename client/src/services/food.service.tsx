@@ -7,6 +7,20 @@ const axiosWithHeader = axios.create({
     headers: authHeader()
 });
 
-export const getImage = (url: String) => {
-    axiosWithHeader.get(API_URL + 'image/url=' + url);
+
+export const getAllergies = () => {
+    return axiosWithHeader.get(API_URL + 'allergies');
+}
+
+export const getBreakfasts = (calories: number, isVegi: boolean) => {
+    return axiosWithHeader.get(API_URL + 'foods?type=breakfast&calories=' + calories + '&isVegi=' + isVegi);
+}
+
+
+export const getLunches = (calories: number, isVegi: boolean) => {
+    return axiosWithHeader.get(API_URL + 'foods?type=lunch&calories=' + calories + '&isVegi=' + isVegi);
+}
+
+export const getDinners = (calories: number, isVegi: boolean) => {
+    return axiosWithHeader.get(API_URL + 'foods?type=dinner&calories=' + calories + '&isVegi=' + isVegi);
 }
