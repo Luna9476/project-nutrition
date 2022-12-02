@@ -62,6 +62,7 @@ export default function Food() {
     const [weight, setWeight] = React.useState(0);
     const [height, setHeight] = React.useState(0);
     const [gender, setGender] = React.useState('');
+    const [age, setAge] = React.useState(0);
     const [isVegi, setVegi] = React.useState(false);
     const [birthdate, setBirthdate] = React.useState<Dayjs | null>(null);
     const [allergetics, setAllergetics] = React.useState<{ id: number, label: string }[]>([]);
@@ -81,13 +82,17 @@ export default function Food() {
                 let height = r2.data.height;
                 let weight = r2.data.weight;
                 setHeight(height);
-                setWeight(weight);
+                setWeight(weight); 
+                
+                let age = dayjs().diff(dayjs(user.birthdate), 'year');
+                setAge(age);
+
 
                 let bmr = 0;
                 if (user.gender === 'male') {
-                    bmr = 66.4730 + (13.7516 * weight) + (5.0033 * height) - (6.7550 * 25)
+                    bmr = 66.4730 + (13.7516 * weight) + (5.0033 * height) - (6.7550 * age)
                 } else {
-                    bmr = 655.1 + (9.5634 * weight) + (1.8496 * height) - (4.6756 * 25);
+                    bmr = 655.1 + (9.5634 * weight) + (1.8496 * height) - (4.6756 * age);
                 }
 
                 setBMR(bmr);
