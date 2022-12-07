@@ -31,6 +31,8 @@ The system can tell users calories of food, and help users manage their daily ca
 
 
 # Demo
+Here to download demo mp4 file: https://drive.google.com/file/d/1peT5kGo_dbLXu48ePJdANhjyWM4VYV1l/view?usp=sharing
+
 https://user-images.githubusercontent.com/90715605/206268644-2e41ec54-b2c8-42fc-b4f5-c54c5da2fc91.mp4
 
 
