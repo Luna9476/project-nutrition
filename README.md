@@ -25,6 +25,10 @@ The system can tell users calories of food, and help users manage their daily ca
 
 **Two relationships:** User-allergens; Food-allergens
 
+## ER diagram
+[ER diagram (health management system).pdf](https://github.com/Luna9476/project-nutrition/files/10179091/ER.diagram.health.management.system.pdf)
+
+
 # Demo
 https://user-images.githubusercontent.com/90715605/206268644-2e41ec54-b2c8-42fc-b4f5-c54c5da2fc91.mp4
 
