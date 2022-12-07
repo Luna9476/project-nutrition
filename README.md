@@ -1,4 +1,34 @@
-# project-nutrition
+# Final Project: Health Management System
+Group 5: Jingwen Zhou, Minghang Li, Lei Lu
+
+# About the Project 
+## Motivation and Objectives
+Nowadays people pay more attention to healthy diet, some want to lose weight, some want to build muscle, and some want to keep fit. Some people concern about their height and weight changes and want to keep track of them easily. Although people care about calories and nutrients in food, many people may not know how to choose food due to the lack of nutrition knowledge. 
+
+Our project aims to recommend three meals a day based on each user’s physical condition. We want to build a system that helps users reach their health goals.
+The system can tell users calories of food, and help users manage their daily calorie intake. Also, for people who would like to easily track their weight and height and see the curve, our system provide a record function for them. Users can update and record their height or weight every day, then the system will draw the curve based on the data.
+
+## Main Features
+1. Profile
+   - Record users’ personal  information (username password, email, gender, vegi, avatar… )
+2. Body Record
+   - Record people’s body information with different date so that system can draw a curve based on the data
+3. Food Bank
+   - Recommend different foods with allergic tags for breakfast, lunch and dinner
+
+## Technical stack 
+- **Frontend**: React.js
+- **Backend**: Python (Flask as Web Framework) 
+
+## Database Structure
+**Three main entities:** Users; Foods; Allergens
+
+**Two relationships:** User-allergens; Food-allergens
+
+# Demo
+https://user-images.githubusercontent.com/90715605/206268644-2e41ec54-b2c8-42fc-b4f5-c54c5da2fc91.mp4
+
+
 
 # How to start
 
