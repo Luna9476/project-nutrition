@@ -1,3 +1,6 @@
+'''
+Main Entrance to respond to client side.
+'''
 import os
 
 from flask import Flask, request, jsonify, make_response, send_file
@@ -14,7 +17,7 @@ from db.food import *
 app = Flask(__name__)
 CORS(app)
 secret_key = secrets.token_hex(16)
-# example output, secret_key = 000d88cd9d90036ebdd237eb6b0db000
+
 app.config['SECRET_KEY'] = '000d88cd9d90036ebdd237eb6b0db000'
 app.config['AVATAR_PATH']='images/avatars'
 
@@ -39,6 +42,7 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
     return decorator
 
+# sign up
 @app.route('/api/auth/register', methods=['POST'])
 def signup_user(): 
     data = request.get_json() 
@@ -48,6 +52,7 @@ def signup_user():
 
 
 
+# log in
 @app.route('/api/auth/login', methods=['POST']) 
 def login_user():
    data = request.get_json()
@@ -65,6 +70,7 @@ def login_user():
    return make_response('could not verify',  401, {'Authentication': '"login required"'})
 
 
+# get user's avatar
 @app.route('/api/avatar', methods = ['GET'])
 @token_required
 def get_user_avatar(current_user):
@@ -73,6 +79,8 @@ def get_user_avatar(current_user):
     print(path)
     return send_file(path)
 
+
+# update user's avatar
 @app.route('/api/avatar', methods = ['POST'])
 @token_required
 def update_user_avatar(current_user):
@@ -85,6 +93,7 @@ def update_user_avatar(current_user):
     return jsonify({'message': 'update successfully'})
    
 
+# get user's profile
 @app.route('/api/profile', methods=['GET'])
 @token_required
 def get_user_profile(current_user):
@@ -92,6 +101,7 @@ def get_user_profile(current_user):
     user_profile = find_user_by_id(user_id)
     return user_profile
 
+# update user's profile
 @app.route('/api/profile', methods=['POST'])
 @token_required
 def update_user_profile(current_user):
@@ -108,6 +118,7 @@ def update_user_profile(current_user):
     update_res = update_user(user_id, user_name, gender, is_vegi, birthdate, allergens)
     print(update_res)
 
+# get user's body record
 @app.route('/api/record', methods=['GET'])
 @token_required
 def get_user_body_record(current_user):
@@ -118,6 +129,7 @@ def get_user_body_record(current_user):
         return user_body_record
     return make_response('no records found', 200, {'message': 'no records found'})
 
+# get all body records of a user
 @app.route('/api/records', methods=['GET'])
 @token_required
 def get_user_body_records(current_user):
@@ -125,6 +137,7 @@ def get_user_body_records(current_user):
     user_body_records = find_user_body_records(user_id)
     return {'records': user_body_records}
 
+# insert new body record
 @app.route('/api/record', methods=['POST'])
 @token_required
 def add_user_body_record(current_user):
@@ -135,6 +148,7 @@ def add_user_body_record(current_user):
     updated_body_record = add_body_record(user_id, height=height, weight=weight)
     return updated_body_record
 
+# handle the image request
 @app.route('/api/image', methods=['GET'])
 def get_image():
     url = request.args.get('url')
@@ -147,11 +161,12 @@ def get_image():
             return make_response('no image found with url', 500)
     return make_response('no url', 400)
 
-
+# get all allergen options
 @app.route('/api/allergies', methods=['GET'])
 def get_allergies():
     return get_all_allergies()
 
+# generate food based on calories and allergens
 @app.route('/api/foods', methods=['GET'])
 @token_required
 def get_foods(current_user):

@@ -1,3 +1,6 @@
+'''
+Interact with allergens table
+'''
 import sqlite3
 
 def get_db_connection():
@@ -9,7 +12,7 @@ def get_db_connection():
         print('No database found')
     return conn
 
-
+# get allergen options
 def get_all_allergies():
     conn = get_db_connection()
     cursor = conn.cursor()

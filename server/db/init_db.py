@@ -1,3 +1,6 @@
+'''
+We use this python file to initialzie db, it will execute scripts in schema.sql
+'''
 import sqlite3
 
 connection = sqlite3.connect('database.db')

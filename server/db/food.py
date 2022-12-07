@@ -1,3 +1,6 @@
+'''
+Interact with the food table to generate food based on calories and user profile.
+'''
 import sqlite3
 
 def get_db_connection():
@@ -10,6 +13,7 @@ def get_db_connection():
     return conn
 
 
+# get food by calories and user's profile
 def get_food_by_calories(calories, type, user_id, is_vegi):
     print(calories, type, user_id, is_vegi)
     conn = get_db_connection()

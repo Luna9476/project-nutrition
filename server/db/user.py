@@ -1,3 +1,6 @@
+'''
+This python file is used to handle db CRUD operations related to user.
+'''
 from datetime import datetime
 import sqlite3
 
@@ -10,6 +13,7 @@ def get_db_connection():
         print('No database found')
     return conn
 
+# add new user record into user table
 def add_new_user(username, email, password):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -21,7 +25,7 @@ def add_new_user(username, email, password):
     finally:
         conn.close()
 
-
+# update user's record
 def update_user(user_id, user_name, gender, is_vegi, birthdate, allergens):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -47,7 +51,7 @@ def update_user(user_id, user_name, gender, is_vegi, birthdate, allergens):
         conn.close()
     return 1
 
-
+# find user's record based on email
 def find_user(email):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -64,6 +68,7 @@ def find_user(email):
     conn.close()
     return user
 
+# find user's record based on user_id
 def find_user_by_id(user_id):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -95,6 +100,7 @@ def find_user_by_id(user_id):
     conn.close()
     return user
 
+# find user's avatar image path
 def find_user_avatar(user_id):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -107,6 +113,7 @@ def find_user_avatar(user_id):
     conn.close()
     return rows[0][0]
 
+# update user's avatar
 def update_avatar(user_id, path):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -116,6 +123,7 @@ def update_avatar(user_id, path):
     conn.commit()
     conn.close()
 
+# find the most recent body record
 def find_latest_body_record(user_id):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -130,6 +138,7 @@ def find_latest_body_record(user_id):
             'weight': row[1]
         }
 
+# add body record
 def add_body_record(user_id, height, weight):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -148,7 +157,7 @@ def add_body_record(user_id, height, weight):
         'weight': row[1]
     }
 
-
+# find user's all body records
 def find_user_body_records(user_id):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -166,7 +175,7 @@ def find_user_body_records(user_id):
     conn.close()
     return records
     
-
+# test method
 def hello():
     conn = get_db_connection()
     rows = conn.execute('SELECT * FROM user').fetchall()
