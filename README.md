@@ -27,6 +27,7 @@ The system can tell users calories of food, and help users manage their daily ca
 
 ## ER diagram
 [ER diagram (health management system).pdf](https://github.com/Luna9476/project-nutrition/files/10179091/ER.diagram.health.management.system.pdf)
+![Database ER diagram (health management system)](https://user-images.githubusercontent.com/91431648/206269884-a6e44af0-4ea5-4334-ba4a-cc8cec447961.png)
 
 
 # Demo
