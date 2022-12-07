@@ -1,6 +1,8 @@
 # Final Project: Health Management System
 Group 5: Jingwen Zhou, Minghang Li, Lei Lu
 
+Our github link is https://github.com/Luna9476/project-nutrition/
+
 # About the Project 
 ## Motivation and Objectives
 Nowadays people pay more attention to healthy diet, some want to lose weight, some want to build muscle, and some want to keep fit. Some people concern about their height and weight changes and want to keep track of them easily. Although people care about calories and nutrients in food, many people may not know how to choose food due to the lack of nutrition knowledge. 
