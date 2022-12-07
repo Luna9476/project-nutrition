@@ -26,7 +26,9 @@ The system can tell users calories of food, and help users manage their daily ca
 **Two relationships:** User-allergens; Food-allergens
 
 # Demo
-[![Watch the video](start.png)](demo.mp4)
+https://user-images.githubusercontent.com/90715605/206268644-2e41ec54-b2c8-42fc-b4f5-c54c5da2fc91.mp4
+
+
 
 # How to start
 
